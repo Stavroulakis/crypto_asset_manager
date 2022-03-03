@@ -6,7 +6,7 @@ from datetime import datetime
 from helpers.buy_helper import calculate_budget
 
 config = {
-        'host': 'localhost',
+        'host': '127.0.0.1',
         'port': 3306,
         'user': 'user',
         'password': 'password',
