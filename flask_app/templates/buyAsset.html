@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Buy{% endblock %}
+
+{% block content %}
+<h2>Buy asset  Page</h2>
+<!-- <p>Your total budget is {{ budget}}</p>
+<p>Your Binance budget is {{ budget}}</p>
+<p>Your available budget is {{ budget}}</p> -->
+<table>
+    {% for key, value in table.items() %}
+
+    <tr>
+       <th> {{ key}} </th>
+       <td> {{ value }} </td>
+    </tr>
+
+    {% endfor %}
+ </table>
+
+
+{% endblock %}

@@ -1,0 +1,58 @@
+create table Users(
+    Uid INT NOT NULL AUTO_INCREMENT,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    UserName VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Pass VARCHAR(100) NOT NULL,
+    PRIMARY KEY ( Uid )
+);
+
+create table Deposits(
+    Uid INT,
+    Platform VARCHAR(100) NOT NULL,
+    Amount FLOAT NOT NULL,
+    DepositDate DATE,
+    Note VARCHAR(100)
+);
+
+
+create table Wallets(
+    Wid INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Uid INT,
+    PRIMARY KEY ( Wid )  
+);
+
+create table Transfer(
+    Asset VARCHAR(100) NOT NULL,
+    FromId INT,
+    ToId INT,
+    TransferDate Date  
+);
+
+create table Buy(
+    Asset VARCHAR(100) NOT NULL,
+    Amount FLOAT,
+    Price FLOAT,
+    BuyDate Date  
+);
+
+create table Swap(
+    AssetFrom VARCHAR(100) NOT NULL,
+    FromAmount FLOAT,
+    FromPrice FLOAT,
+    AssetTo VARCHAR(100) NOT NULL,
+    ToAmount FLOAT,
+    ToPrice FLOAT,
+    SwapDate Date  
+);
+
+create table Assets(
+    Asset VARCHAR(100) NOT NULL,
+    Amount FLOAT,
+    Wid INT,
+    PriceMosB FLOAT  
+);
+
+##### hist intro #####

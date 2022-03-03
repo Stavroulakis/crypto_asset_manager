@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}Deposit{% endblock %}
+
+{% block content %}
+<h2>Deposit  Page</h2>
+<p>What do you want to deposit {{ username }}!</p>
+<form action="{{ url_for('deposit') }}" method="post">
+    <label for="platform"></label>
+    <select id="platform" name="platform">
+        <option value="Binance">Binance</option>
+        <option value="Coinbase">Coinbase</option>
+    </select>
+    <label for="amount"></label>
+    <input type="text" name="amount" placeholder="amount" id="amount" required>
+    <label for="date"></label>
+    <input type="datetime-local" name="date" placeholder="date" id="date">
+    <label for="note"></label>
+    <input type="text" name="note" placeholder="note" id="note">
+    <div class="msg">{{ msg }}</div>
+    <input type="submit" value="Deposit" id="deposit-submit" name="deposit-submit">
+</form>
+
+<form action="{{ url_for('deposit') }}" method="post">
+    <label for="wallet"></label>
+    <input type="text" name="wallet" placeholder="wallet" id="wallet" required>
+    <div class="msg">{{ msg }}</div>
+    <input type="submit" value="Deposit" id="wallet-submit" name="wallet-submit">
+</form>
+x{% endblock %}
