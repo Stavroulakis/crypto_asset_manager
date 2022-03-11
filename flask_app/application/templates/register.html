@@ -10,16 +10,16 @@
 		<div class="register">
 			<h1>Register</h1>
 			<div class="links">
-				
+				<a href="{{ url_for('auth.login') }}" class="active">Login</a>
 				<a href="{{ url_for('auth.register') }}" class="active">Register</a>
 			</div>
 			<form action="{{ url_for('auth.register') }}" method="post" autocomplete="off">
                 <label for="firstname">
-					<i class="fas fa-name"></i>
+					<i class="fas fa-user"></i>
 				</label>
 				<input type="text" name="firstname" placeholder="FirstName" id="firstname" required>
 				<label for="lastname">
-					<i class="fas fa-lastname"></i>
+					<i class="fas fa-user"></i>
 				</label>
 				<input type="text" name="lastname" placeholder="LastName" id="lastname" required>
                 
