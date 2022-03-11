@@ -10,10 +10,10 @@
 		<nav class="navtop">
 			<div>
 				<h1>Crypto Asset Manager</h1>
-                <a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Home</a>
-                <a href="{{ url_for('deposit') }}"><i class="fas fa-deposit"></i>Deposit</a>
-                <a href="{{ url_for('buy') }}">Buy</a>
-				<a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                <a href="{{ url_for('dash.home') }}"><i class="fas fa-home"></i>Home</a>
+                <a href="{{url_for('action.deposit') }}"><i class="fas fa-deposit"></i>Deposit</a>
+                <a href="{{ url_for('action.buy')}}">Buy</a>
+				<a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a> -->
 			</div>
 		</nav>
 		<div class="content">
