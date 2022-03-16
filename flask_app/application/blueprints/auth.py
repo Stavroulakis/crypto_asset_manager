@@ -50,6 +50,7 @@ def logout():
    session.pop('logged_in', None)
    session.pop('id', None)
    session.pop('userName', None)
+   session.pop('wallets',None)
    # Redirect to login page
    return redirect(url_for('auth.login'))
 

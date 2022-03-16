@@ -12,3 +12,5 @@ class Config:
     DB_DATABASE = environ.get('DB_DATABASE')
     SECRET_KEY = os.urandom(32)
     DEBUG=True
+    BINANCE_SECRET_KEY = environ.get('BINANCE_SECRET_KEY')
+    BINANCE_API_KEY = environ.get('BINANCE_API_KEY')
