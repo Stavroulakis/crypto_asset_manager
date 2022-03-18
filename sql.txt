@@ -35,9 +35,9 @@ create table Buy(
     Asset VARCHAR(100) NOT NULL,
     Amount FLOAT,
     Price FLOAT,
-    Platform VARCHAR(100)
+    Platform VARCHAR(100),
     BuyDate Date,
-    Uid INT,  
+    Uid INT  
 );
 
 create table Swap(
