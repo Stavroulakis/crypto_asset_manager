@@ -80,7 +80,10 @@ def move():
         wallet_source_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['source_wallet']][0]
         wallet_dest_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['dest_wallet']][0]
         asset = request.form['asset']
+        date_move = date_picker(request.form['MoveDate'])
         cursor.execute( ("Update Assets SET Wid=%s where Wid=%s and Asset = %s"),(wallet_dest_id,wallet_source_id,asset,))
+        connection.commit()
+        cursor.execute( ("Insert into Transfer (Asset,FromId,ToId,TransferDate) values (%s,%s,%s,%s)"),(asset,wallet_source_id,wallet_dest_id,date_move,))
         connection.commit()
         msg='Asset was succesfully moved'
 
@@ -96,3 +99,14 @@ def update_assets_dropdown():
     for entry in assets:
         html_string_selected += '<option value="{}">{}</option>'.format(entry, entry)
     return jsonify(html_string_selected=html_string_selected)
+
+@action_bp.route("/swap",methods=['GET','POST'])
+@login_require
+def swap():
+    msg=""
+    connection, cursor = db_connect()
+    cursor.execute( ("SELECT Wid as wallet_id, Name as wallet_name FROM Wallets where  Uid=%s"), (session['id'],))
+    wallets = cursor.fetchall()
+    session['wallets']=wallets
+    sourceWallets = [ entry['wallet_name'] for entry in wallets ]
+    return render_template('swapAsset.html',sourceWallets=sourceWallets,msg=msg)

@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block title %}Move{% endblock %}
+
+{% block content %}
+<h2>Swap asset page</h2>
+
+ <p>Swap from one crypto asset to  another</p>
+
+ <form action="{{ url_for('action.swap') }}" method="post">
+   <label for="source_wallet"></label>
+   <select id="source_wallet" name="source_wallet">
+        <option value = "" selected disabled hidden>Choose source wallet</option>
+        {% for sw in sourceWallets %}
+            <option value = "{{sw}}">{{sw}}</option>
+        {% endfor %}
+   </select>
+   <label for="asset_from"></label>
+   <select id="asset_from" name="asset_from">
+    <option value = "" selected disabled hidden>Choose asset</option>
+    {% for asset_from in allAssets %}
+        <option value = "{{asset_from}}">{{asset_from}}</option>
+    {% endfor %}
+    </select>
+   <label for="amount_from"></label>
+   <input type="text" name="amount_from" placeholder="amount_from" id="amount_from" required>
+   <label for="price_from"></label>
+   <input type="text" name="price_from" placeholder="price_from" id="price_from">
+   <label for="asset_to"></label>
+   <input type="text" name="asset_to" placeholder="asset_to" id="asset_to" required>
+   <label for="amount_to"></label>
+   <input type="text" name="amount_to" placeholder="amount_to" id="amount_to" required>
+   <label for="price_to"></label>
+   <input type="text" name="price_to" placeholder="price_to" id="price_to">
+  <label for="SwapDate"></label>
+    <input type="datetime-local" name="SwapDate" placeholder="SwapDate" id="SwapDate">
+   <div class="msg">{{ msg }}</div>
+   <input type="submit" value="Swap" id="Swap-submit" name="Swap-submit">
+</form>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#source_wallet').change(function(){
+
+      $.getJSON('/_update_assets_dropdown', {
+        selected_source_wallet: $('#source_wallet').val()
+
+      }).success(function(data) {
+            $('#asset').html(data.html_string_selected);
+       })
+    });
+  });
+</script>
+
+
+
+{% endblock %}

@@ -23,12 +23,15 @@
     {% endfor %}
     </select>
    <label for="amount"></label>
-   <select id="dest_wallet" name="dest_wallet">
+   <input type="text" name="amount" placeholder="amount" id="amount" required>
+  <select id="dest_wallet" name="dest_wallet">
     <option value = "" selected disabled hidden>Choose destination wallet</option>
     {% for dw in sourceWallets %}
         <option value = "{{dw}}">{{dw}}</option>
     {% endfor %}
-    </select>
+  </select>
+  <label for="MoveDate"></label>
+    <input type="datetime-local" name="MoveDate" placeholder="MoveDate" id="MoveDate">
    <div class="msg">{{ msg }}</div>
    <input type="submit" value="Move" id="Move-submit" name="Move-submit">
 </form>
