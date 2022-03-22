@@ -109,4 +109,18 @@ def swap():
     wallets = cursor.fetchall()
     session['wallets']=wallets
     sourceWallets = [ entry['wallet_name'] for entry in wallets ]
+
+    if request.method == "POST" and "source_wallet" in request.form and "Swap-submit" in request.form:
+        assetFrom = request.form['asset_from']
+        amountFrom = request.form['amount_from']
+        priceFrom = request.form['price_from']
+        assetTo = request.form['asset_to']
+        amountTo = request.form['amount_to']
+        priceTo = request.form['price_to']
+        date_swap = date_picker(request.form['SwapDate'])
+
+
+
+
+
     return render_template('swapAsset.html',sourceWallets=sourceWallets,msg=msg)

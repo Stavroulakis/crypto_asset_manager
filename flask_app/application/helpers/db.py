@@ -7,6 +7,6 @@ def db_connect():
                                          port = current_app.config['DB_PORT'],
                                          user = current_app.config['DB_USER'],
                                          password = current_app.config['DB_PASSWORD'],
-                                         database = current_app.config['DB_DATABASE'])
+                                         database = current_app.config['DB_DATABASE'],auth_plugin='mysql_native_password')
     cursor = connection.cursor(buffered=True , dictionary=True)
     return connection, cursor
