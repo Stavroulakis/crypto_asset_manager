@@ -71,10 +71,10 @@ def buy():
 def move():
     msg=""
     connection, cursor = db_connect()
-    cursor.execute( ("SELECT Wid as wallet_id, Name as wallet_name FROM Wallets where  Uid=%s"), (session['id'],))
-    wallets = cursor.fetchall()
-    session['wallets']=wallets
-    sourceWallets = [ entry['wallet_name'] for entry in wallets ]
+    # cursor.execute( ("SELECT Wid as wallet_id, Name as wallet_name FROM Wallets where  Uid=%s"), (session['id'],))
+    # wallets = cursor.fetchall()
+    # session['wallets']=wallets
+    sourceWallets = [ entry['wallet_name'] for entry in session['wallets'] ]
 
     if request.method == "POST" and "source_wallet" in request.form and "dest_wallet" in request.form and "Move-submit" in request.form:
         wallet_source_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['source_wallet']][0]
@@ -118,6 +118,19 @@ def swap():
         amountTo = request.form['amount_to']
         priceTo = request.form['price_to']
         date_swap = date_picker(request.form['SwapDate'])
+        ## add to swap table
+        connection, cursor = db_connect()
+        cursor.execute( ("Insert into Swap (AssetFrom,FromAmount,FromPrice,AssetTo,ToAmount,ToPrice,SwapDate) values (%s,%s,%s,%s,%s,%s,%s)"),(assetFrom,amountFrom,
+                                                                                                                        priceFrom,assetTo,amountTo,priceTo,date_swap,))
+        connection.commit()
+        ## update assets
+        wallet_source_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['source_wallet']][0]
+        cursor.execute( ("Update Assets SET Amount=Amount - %s where Wid=%s and Asset = %s"),(amountFrom,wallet_source_id,assetFrom,))
+        connection.commit()
+        cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE Amount=Amount + %s "),(assetTo,amountTo,wallet_source_id,priceTo,amountTo,))
+        connection.commit()
+
+
 
 
 

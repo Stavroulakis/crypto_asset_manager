@@ -54,7 +54,8 @@ create table Assets(
     Asset VARCHAR(100) NOT NULL,
     Amount FLOAT,
     Wid INT,
-    PriceMosB FLOAT  
+    PriceMosB FLOAT,
+    UNIQUE (Asset) 
 );
 
 ##### hist intro #####

@@ -37,6 +37,9 @@ def login():
             session['logged_in'] = True
             session['id']=account['Uid']
             session['userName'] = account['UserName']
+            cursor.execute( ("SELECT Wid as wallet_id, Name as wallet_name FROM Wallets where  Uid=%s"), (session['id'],))
+            wallets = cursor.fetchall()
+            session['wallets']=wallets
             return redirect(url_for('dash.home'))
         else:
             msg='Incorrect username or password'
