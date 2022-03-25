@@ -47,6 +47,7 @@ create table Swap(
     AssetTo VARCHAR(100) NOT NULL,
     ToAmount FLOAT,
     ToPrice FLOAT,
+    Uid INT, 
     SwapDate Date  
 );
 
@@ -55,7 +56,7 @@ create table Assets(
     Amount FLOAT,
     Wid INT,
     PriceMosB FLOAT,
-    UNIQUE (Asset) 
+    constraint UAsset UNIQUE (Asset,Wid) 
 );
 
 ##### hist intro #####

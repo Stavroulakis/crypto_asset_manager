@@ -62,7 +62,9 @@ def buy():
             ##get wallet id
             cursor.execute( ("SELECT Wid as wallet FROM Wallets where  Name = %s and Uid=%s"), (platform+"W",session['id'],))
             wallet_id = cursor.fetchone()
-            cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s)"),(asset,amount,wallet_id['wallet'],price,))
+            # cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s)"),(asset,amount,wallet_id['wallet'],price,))
+            cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE Amount=Amount + %s "),(asset,amount,wallet_id,price,amount,))
+
             connection.commit() 
     return render_template('buyAsset.html', table = table)
 
@@ -81,8 +83,10 @@ def move():
         wallet_dest_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['dest_wallet']][0]
         asset = request.form['asset']
         date_move = date_picker(request.form['MoveDate'])
+        
         cursor.execute( ("Update Assets SET Wid=%s where Wid=%s and Asset = %s"),(wallet_dest_id,wallet_source_id,asset,))
         connection.commit()
+        
         cursor.execute( ("Insert into Transfer (Asset,FromId,ToId,TransferDate) values (%s,%s,%s,%s)"),(asset,wallet_source_id,wallet_dest_id,date_move,))
         connection.commit()
         msg='Asset was succesfully moved'
@@ -120,8 +124,8 @@ def swap():
         date_swap = date_picker(request.form['SwapDate'])
         ## add to swap table
         connection, cursor = db_connect()
-        cursor.execute( ("Insert into Swap (AssetFrom,FromAmount,FromPrice,AssetTo,ToAmount,ToPrice,SwapDate) values (%s,%s,%s,%s,%s,%s,%s)"),(assetFrom,amountFrom,
-                                                                                                                        priceFrom,assetTo,amountTo,priceTo,date_swap,))
+        cursor.execute( ("Insert into Swap (AssetFrom,FromAmount,FromPrice,AssetTo,ToAmount,ToPrice,Uid,SwapDate) values (%s,%s,%s,%s,%s,%s,%s)"),(assetFrom,amountFrom,
+                                                                                                                        priceFrom,assetTo,amountTo,priceTo,session['id'],date_swap,))
         connection.commit()
         ## update assets
         wallet_source_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['source_wallet']][0]
