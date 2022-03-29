@@ -62,10 +62,11 @@ def buy():
             ##get wallet id
             cursor.execute( ("SELECT Wid as wallet FROM Wallets where  Name = %s and Uid=%s"), (platform+"W",session['id'],))
             wallet_id = cursor.fetchone()
+            wallet_id =wallet_id['wallet']
             # cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s)"),(asset,amount,wallet_id['wallet'],price,))
             cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE Amount=Amount + %s "),(asset,amount,wallet_id,price,amount,))
-
-            connection.commit() 
+            connection.commit()
+            redirect(url_for('action.buy')) 
     return render_template('buyAsset.html', table = table)
 
 @action_bp.route("/move",methods=['GET','POST'])
@@ -124,7 +125,7 @@ def swap():
         date_swap = date_picker(request.form['SwapDate'])
         ## add to swap table
         connection, cursor = db_connect()
-        cursor.execute( ("Insert into Swap (AssetFrom,FromAmount,FromPrice,AssetTo,ToAmount,ToPrice,Uid,SwapDate) values (%s,%s,%s,%s,%s,%s,%s)"),(assetFrom,amountFrom,
+        cursor.execute( ("Insert into Swap (AssetFrom,FromAmount,FromPrice,AssetTo,ToAmount,ToPrice,Uid,SwapDate) values (%s,%s,%s,%s,%s,%s,%s,%s)"),(assetFrom,amountFrom,
                                                                                                                         priceFrom,assetTo,amountTo,priceTo,session['id'],date_swap,))
         connection.commit()
         ## update assets

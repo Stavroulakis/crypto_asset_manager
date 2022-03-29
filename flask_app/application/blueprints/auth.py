@@ -62,6 +62,6 @@ def login_require(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if 'logged_in' not in session:
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.login',next=request.url))
         return  view(**kwargs)
     return wrapped_view
