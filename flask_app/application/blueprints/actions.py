@@ -83,9 +83,12 @@ def move():
         wallet_source_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['source_wallet']][0]
         wallet_dest_id = [temp['wallet_id'] for temp in session['wallets'] if temp["wallet_name"] == request.form['dest_wallet']][0]
         asset = request.form['asset']
+        amount = 
         date_move = date_picker(request.form['MoveDate'])
         
-        cursor.execute( ("Update Assets SET Wid=%s where Wid=%s and Asset = %s"),(wallet_dest_id,wallet_source_id,asset,))
+        cursor.execute( ("Update Assets SET Wid=%s where Wid=%s and Asset = %s ON DUPLICATE KEY UPDATE Amount=Amount + %s "),(wallet_dest_id,wallet_source_id,asset,))
+        cursor.execute( ("Insert into Assets (Asset,Amount,Wid,PriceMosB) values (%s,%s,%s,%s) ON DUPLICATE KEY UPDATE Amount=Amount + %s "),(assetTo,amountTo,wallet_source_id,priceTo,amountTo,))
+
         connection.commit()
         
         cursor.execute( ("Insert into Transfer (Asset,FromId,ToId,TransferDate) values (%s,%s,%s,%s)"),(asset,wallet_source_id,wallet_dest_id,date_move,))
