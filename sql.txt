@@ -28,7 +28,8 @@ create table Transfer(
     Asset VARCHAR(100) NOT NULL,
     FromId INT,
     ToId INT,
-    TransferDate Date  
+    TransferDate Date,
+    Amount FLOAT
 );
 
 create table Buy(

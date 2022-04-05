@@ -21,3 +21,13 @@ def assets_per_wallet_fetcher(wallet_id):
     connection, cursor = db_connect()
     cursor.execute( ("SELECT Asset  FROM Assets where  Wid=%s"), (wallet_id,))
     return cursor.fetchall()
+
+def reduce_asset_amount(wallet_id, asset, amount):
+    connection, cursor = db_connect()
+    cursor.execute( ("Update Assets SET Amount=Amount - %s where Wid=%s and Asset = %s "),(amount,wallet_id,asset,))
+    connection.commit()
+
+def move_asset_to_wallet(wallet_id,asset,amount):
+    connection, cursor = db_connect()
+    cursor.execute( ("Insert into Assets (Asset,Amount,Wid) values (%s,%s,%s) ON DUPLICATE KEY UPDATE Amount= Amount + %s "),(asset,amount,wallet_id,amount,))
+    connection.commit()
