@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}Move{% endblock %}
+
+{% block content %}
+<h2>Move asset page</h2>
+
+ <p>Move crypto asset from one wallet to another</p>
+
+ <form action="{{ url_for('action.move') }}" method="post">
+   <label for="source_wallet"></label>
+   <select id="source_wallet" name="source_wallet">
+        <option value = "" selected disabled hidden>Choose source wallet</option>
+        {% for sw in sourceWallets %}
+            <option value = "{{sw}}">{{sw}}</option>
+        {% endfor %}
+   </select>
+   <label for="asset"></label>
+   <select id="asset" name="asset">
+    <option value = "" selected disabled hidden>Choose asset</option>
+    {% for asset in allAssets %}
+        <option value = "{{asset}}">{{asset}}</option>
+    {% endfor %}
+    </select>
+   <label for="amount"></label>
+   <input type="text" name="amount" placeholder="amount" id="amount" required>
+  <select id="dest_wallet" name="dest_wallet">
+    <option value = "" selected disabled hidden>Choose destination wallet</option>
+    {% for dw in sourceWallets %}
+        <option value = "{{dw}}">{{dw}}</option>
+    {% endfor %}
+  </select>
+  <label for="MoveDate"></label>
+    <input type="datetime-local" name="MoveDate" placeholder="MoveDate" id="MoveDate">
+   <div class="msg">{{ msg }}</div>
+   <input type="submit" value="Move" id="Move-submit" name="Move-submit">
+</form>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#source_wallet').change(function(){
+
+      $.getJSON('/_update_assets_dropdown', {
+        selected_source_wallet: $('#source_wallet').val()
+
+      }).success(function(data) {
+            $('#asset').html(data.html_string_selected);
+       })
+    });
+  });
+</script>
+
+
+
+{% endblock %}

@@ -37,6 +37,9 @@ def login():
             session['logged_in'] = True
             session['id']=account['Uid']
             session['userName'] = account['UserName']
+            cursor.execute( ("SELECT Wid as wallet_id, Name as wallet_name FROM Wallets where  Uid=%s"), (session['id'],))
+            wallets = cursor.fetchall()
+            session['wallets']=wallets
             return redirect(url_for('dash.home'))
         else:
             msg='Incorrect username or password'
@@ -50,6 +53,7 @@ def logout():
    session.pop('logged_in', None)
    session.pop('id', None)
    session.pop('userName', None)
+   session.pop('wallets',None)
    # Redirect to login page
    return redirect(url_for('auth.login'))
 
@@ -58,6 +62,6 @@ def login_require(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if 'logged_in' not in session:
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.login',next=request.url))
         return  view(**kwargs)
     return wrapped_view

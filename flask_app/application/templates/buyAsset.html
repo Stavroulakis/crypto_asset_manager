@@ -17,6 +17,32 @@
 
     {% endfor %}
  </table>
+ 
+ <p>Buy new crypto asset</p>
+{% with messages = get_flashed_messages() %}  
+         {% if messages %}  
+               {% for message in messages %}  
+                    <p>{{ message }}</p>  
+               {% endfor %}  
+         {% endif %}  
+{% endwith %}  
+ <form action="{{ url_for('action.buy') }}" method="post">
+   <label for="platform"></label>
+   <select id="platform" name="platform">
+       <option value="Binance">Binance</option>
+       <option value="Coinbase">Coinbase</option>
+   </select>
+   <label for="asset"></label>
+   <input type="text" name="asset" placeholder="asset" id="asset" required>
+   <label for="amount"></label>
+   <input type="text" name="amount" placeholder="amount" id="amount" required>
+   <label for="price"></label>
+   <input type="text" name="price" placeholder="price" id="price">
+   <label for="buyDate"></label>
+   <input type="datetime-local" name="buyDate" placeholder="buyDate" id="buyDate">
+   <div class="msg">{{ msg }}</div>
+   <input type="submit" value="Buy" id="Buy-submit" name="Buy-submit">
+</form>
 
 
 {% endblock %}

@@ -28,14 +28,17 @@ create table Transfer(
     Asset VARCHAR(100) NOT NULL,
     FromId INT,
     ToId INT,
-    TransferDate Date  
+    TransferDate Date,
+    Amount FLOAT
 );
 
 create table Buy(
     Asset VARCHAR(100) NOT NULL,
     Amount FLOAT,
     Price FLOAT,
-    BuyDate Date  
+    Platform VARCHAR(100),
+    BuyDate Date,
+    Uid INT  
 );
 
 create table Swap(
@@ -45,6 +48,7 @@ create table Swap(
     AssetTo VARCHAR(100) NOT NULL,
     ToAmount FLOAT,
     ToPrice FLOAT,
+    Uid INT, 
     SwapDate Date  
 );
 
@@ -52,7 +56,8 @@ create table Assets(
     Asset VARCHAR(100) NOT NULL,
     Amount FLOAT,
     Wid INT,
-    PriceMosB FLOAT  
+    PriceMosB FLOAT,
+    constraint UAsset UNIQUE (Asset,Wid) 
 );
 
 ##### hist intro #####
