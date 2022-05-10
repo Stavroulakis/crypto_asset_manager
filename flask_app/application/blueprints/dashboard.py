@@ -14,6 +14,7 @@ dash_bp = Blueprint('dash',__name__)
 def home():
     wallets = get_user_wallets(session['id'])
     assetsDf = get_all_assets(wallets)
+    print(assetsDf)
     fig = px.pie(assetsDf, values='Amount', names='Asset')
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return render_template('home.html',username=session['userName'],graphJSON=graphJSON)

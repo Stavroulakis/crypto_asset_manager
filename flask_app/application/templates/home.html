@@ -2,13 +2,14 @@
 
 {% block title %}Home{% endblock %}
 
-{% block content %}
+<!-- {% block content %} -->
 <h2>Home Page</h2>
 <p>Welcome back, {{ username }}!</p>
-<div id="chart"></div>
+<div id="chart" class="chart"></div>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script type="text/javascript">
     var graphs = {{graphJSON | safe}}
     Plotly.plot('chart',graphs,{});        
 </script>
-{% endblock %}
+
+<!-- {% endblock %} -->

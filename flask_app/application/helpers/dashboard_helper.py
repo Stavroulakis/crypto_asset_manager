@@ -15,4 +15,7 @@ def get_all_assets(wallets):
     connection, cursor = db_connect()
     query = "SELECT Asset,Amount  FROM Assets where Wid in {}".format(wallets)
     df = pd.read_sql(query, connection)
+    df['Amount'] = df['Amount'].apply(lambda x: round(float(x)),3)
+    # df = df[df['Asset']!='bitrise-token']
+    # df = df[df['Amount']<100]
     return df
